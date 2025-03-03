@@ -2,51 +2,46 @@
 $pdo = new PDO("mysql:host=localhost;dbname=airbnb", "root", "");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Vérification si les clés existent dans $_POST
     $room_type = isset($_POST['room_type']) ? $_POST['room_type'] : 'Chambre privée';
     $rental_count = isset($_POST['rental_count']) ? $_POST['rental_count'] : 0;
     $main_image_id = isset($_POST['main_image_id']) ? $_POST['main_image_id'] : 1;
 
-    // Préparation de la requête d'insertion
     $stmt = $pdo->prepare("INSERT INTO rooms 
         (home_type, room_type, total_occupancy, total_bedrooms, total_bathrooms, summary, address, 
         price, published_at, latitude, longitude, city, state, country, max_people, 
         total_rooms, main_image_id, is_available)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-    // Si l'utilisateur a choisi "Autre" pour le type de logement, on utilise la valeur personnalisée
     $home_type = isset($_POST['home_type']) && $_POST['home_type'] !== 'Autre' ? $_POST['home_type'] : ($_POST['other_home_type'] ?? 'Appartement');
 
-    // Préparation des paramètres pour l'insertion
     $params = [
-        $home_type, // home_type
-        $room_type, // room_type
-        $_POST['total_occupancy'] ?: 2, // total_occupancy
-        $_POST['total_bedrooms'] ?: 1, // total_bedrooms
-        $_POST['total_bathrooms'] ?: 1, // total_bathrooms
-        $_POST['summary'] ?: 'Résumé par défaut', // summary
-        $_POST['address'] ?: 'Adresse par défaut', // address
-        $_POST['price'] ?: 50, // price
-        date('Y-m-d H:i:s'), // published_at
-        $_POST['latitude'] ?: 0.0, // latitude
-        $_POST['longitude'] ?: 0.0, // longitude
-        $_POST['city'] ?: 'Ville par défaut', // city
-        $_POST['state'] ?: 'État par défaut', // state
-        $_POST['country'] ?: 'Pays par défaut', // country
-        $_POST['max_people'] ?: 2, // max_people
-        $_POST['total_rooms'] ?: 1, // total_rooms
-        $main_image_id, // main_image_id
-        isset($_POST['is_available']) ? $_POST['is_available'] : 1 // is_available (on vérifie si la case est cochée)
+        $home_type,
+        $room_type,
+        $_POST['total_occupancy'] ?: 2, 
+        $_POST['total_bedrooms'] ?: 1,
+        $_POST['total_bathrooms'] ?: 1,
+        $_POST['summary'] ?: 'Résumé par défaut', 
+        $_POST['address'] ?: 'Adresse par défaut', 
+        $_POST['price'] ?: 50, 
+        date('Y-m-d H:i:s'), 
+        $_POST['latitude'] ?: 0.0,
+        $_POST['longitude'] ?: 0.0,
+        $_POST['city'] ?: 'Ville par défaut',
+        $_POST['state'] ?: 'État par défaut',
+        $_POST['country'] ?: 'Pays par défaut',
+        $_POST['max_people'] ?: 2,
+        $_POST['total_rooms'] ?: 1,
+        $main_image_id,
+        isset($_POST['is_available']) ? $_POST['is_available'] : 1 
     ];
 
-    // Vérification du nombre de paramètres et d'arguments dans la requête
+
     if (count($params) != 17) {
         echo "<div class='error-message'>Erreur : Le nombre de paramètres ne correspond pas à la requête SQL.</div>";
-        var_dump($params); // Vous pouvez supprimer cette ligne après avoir vérifié.
+        var_dump($params); 
         exit;
     }
 
-    // Exécution de la requête avec les paramètres
     try {
         $stmt->execute($params);
         echo "<div class='success-message'>Logement ajouté avec succès ! <a href='home.php'>Retour</a></div>";
