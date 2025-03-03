@@ -1,0 +1,45 @@
+-- Insertion de données dans la table users
+INSERT INTO `users` (`name`, `email`, `password`, `phone_number`, `description`, `profile_image_id`, `owned_rooms_count`, `property_count`)
+VALUES
+('Alice Martin', 'alice.martin@example.com', 'hashedpassword123', '+33123456789', 'Hôte expérimenté avec plusieurs propriétés.', 1, 2, 2),
+('Jean Dupont', 'jean.dupont@example.com', 'hashedpassword456', '+33698765432', 'Voyageur passionné à la recherche de nouvelles expériences.', 2, 0, 0);
+
+-- Insertion de données dans la table rooms
+INSERT INTO `rooms` (`home_type`, `room_type`, `total_occupancy`, `total_bedrooms`, `total_bathrooms`, `summary`, `address`, `price`, `published_at`, `owner_id`, `latitude`, `longitude`, `city`, `state`, `country`, `max_people`, `total_rooms`, `main_image_id`)
+VALUES
+('Appartement', 'Privé', 4, 2, 1, 'Charmant appartement en centre-ville.', '10 Rue de Paris, 75001 Paris', 120, NOW(), 1, 48.8566, 2.3522, 'Paris', 'Île-de-France', 'France', 4, 1, 3),
+('Maison', 'Complet', 6, 3, 2, 'Maison spacieuse avec jardin.', '25 Boulevard Haussmann, 75009 Paris', 200, NOW(), 1, 48.8738, 2.3320, 'Paris', 'Île-de-France', 'France', 6, 1, 4);
+
+-- Insertion de données dans la table reservations
+INSERT INTO `reservations` (`user_id`, `room_id`, `start_date`, `end_date`, `total_price`, `duration_days`, `adults_count`, `children_count`)
+VALUES
+(2, 1, '2025-06-10', '2025-06-15', 600, 5, 2, 1),
+(2, 2, '2025-07-01', '2025-07-10', 1800, 9, 4, 2);
+
+-- Insertion de données dans la table reviews
+INSERT INTO `reviews` (`reservation_id`, `rating`, `comment`)
+VALUES
+(1, 5, 'Superbe séjour, appartement propre et bien situé !'),
+(2, 4, 'Maison confortable, hôte accueillant mais un peu bruyant la nuit.');
+
+-- Insertion de données dans la table payments
+INSERT INTO `payments` (`reservation_id`, `amount`, `payment_method`, `payment_status`, `payment_date`)
+VALUES
+(1, 600, 'Carte de crédit', 'completed', NOW()),
+(2, 1800, 'Paypal', 'completed', NOW());
+
+-- Mettre à jour la disponibilité d'une chambre après une réservation
+UPDATE `rooms`
+SET `is_available` = FALSE
+WHERE `id` IN (SELECT `room_id` FROM `reservations` WHERE `start_date` <= NOW() AND `end_date` >= NOW());
+
+-- Annulation d'une réservation et remboursement
+DELETE FROM `reservations` WHERE `id` = 2;
+UPDATE `payments` SET `refund` = TRUE WHERE `reservation_id` = 2;
+
+-- Suppression d’un avis
+DELETE FROM `reviews` WHERE `id` = 1;
+
+-- Recherche avancée de logements disponibles à Paris avec un prix inférieur à 150€/nuit
+SELECT * FROM `rooms`
+WHERE `city` = 'Paris' AND `price` <= 150 AND `is_available` = TRUE;
