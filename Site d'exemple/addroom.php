@@ -1,64 +1,14 @@
-<?php
-$pdo = new PDO("mysql:host=localhost;dbname=airbnb", "root", "");
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $room_type = isset($_POST['room_type']) ? $_POST['room_type'] : 'Chambre privée';
-    $rental_count = isset($_POST['rental_count']) ? $_POST['rental_count'] : 0;
-    $main_image_id = isset($_POST['main_image_id']) ? $_POST['main_image_id'] : 1;
-
-    $stmt = $pdo->prepare("INSERT INTO rooms 
-        (home_type, room_type, total_occupancy, total_bedrooms, total_bathrooms, summary, address, 
-        price, published_at, latitude, longitude, city, state, country, max_people, 
-        total_rooms, main_image_id, is_available)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-    $home_type = isset($_POST['home_type']) && $_POST['home_type'] !== 'Autre' ? $_POST['home_type'] : ($_POST['other_home_type'] ?? 'Appartement');
-
-    $params = [
-        $home_type,
-        $room_type,
-        $_POST['total_occupancy'] ?: 2, 
-        $_POST['total_bedrooms'] ?: 1,
-        $_POST['total_bathrooms'] ?: 1,
-        $_POST['summary'] ?: 'Résumé par défaut', 
-        $_POST['address'] ?: 'Adresse par défaut', 
-        $_POST['price'] ?: 50, 
-        date('Y-m-d H:i:s'), 
-        $_POST['latitude'] ?: 0.0,
-        $_POST['longitude'] ?: 0.0,
-        $_POST['city'] ?: 'Ville par défaut',
-        $_POST['state'] ?: 'État par défaut',
-        $_POST['country'] ?: 'Pays par défaut',
-        $_POST['max_people'] ?: 2,
-        $_POST['total_rooms'] ?: 1,
-        $main_image_id,
-        isset($_POST['is_available']) ? $_POST['is_available'] : 1 
-    ];
-
-
-    if (count($params) != 17) {
-        echo "<div class='error-message'>Erreur : Le nombre de paramètres ne correspond pas à la requête SQL.</div>";
-        var_dump($params); 
-        exit;
-    }
-
-    try {
-        $stmt->execute($params);
-        echo "<div class='success-message'>Logement ajouté avec succès ! <a href='home.php'>Retour</a></div>";
-    } catch (PDOException $e) {
-        echo "<div class='error-message'>Erreur : " . $e->getMessage() . "</div>";
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <button onclick="window.location.href='home.php';">Retour à l'accueil</button>
     <title>Ajouter un Logement</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styleaddroom.css">
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-LO0l8rQlmDkTyd-Z_40JzGk5oOVhPSc&libraries=places&callback=initMap" async defer></script>
+
     <script>
         function determineHomeType(city, state) {
             if (city && (city.toLowerCase().includes("paris") || city.toLowerCase().includes("boulogne-billancourt") || city.toLowerCase().includes("levallois-perret"))) {
@@ -153,6 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     </script>
+
 </head>
 <body>
 
