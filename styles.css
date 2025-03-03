@@ -1,0 +1,106 @@
+/* styles.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    background-image: linear-gradient(to bottom right, #f4f4f4, #e0e0e0); /* Dégradé doux */
+}
+
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+input, textarea, button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+input[type="text"], input[type="number"], input[type="email"], textarea {
+    background-color: #f9f9f9;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+label {
+    font-size: 14px;
+    color: #333;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+input[type="checkbox"] {
+    margin-top: 0;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, textarea:focus {
+    outline: none;
+    border-color: #80b3ff; /* Bordure bleue lors du focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+input, textarea {
+    transition: all 0.3s ease;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+form input, form textarea, form button {
+    margin-bottom: 20px;
+}
+
+form input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+}
+
+form input[type="checkbox"]:checked + label {
+    font-weight: bold;
+}
+
+.container h1, .container form {
+    width: 100%;
+}
