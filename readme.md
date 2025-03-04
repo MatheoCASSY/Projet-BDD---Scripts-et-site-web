@@ -13,7 +13,9 @@ Ce projet vise à reproduire la base de données d'Airbnb exploitée par une esq
 - `styleaddroom.css` : Feuille de style spécifique à l'ajout de logement.  
 - `styleregisterlogin.css` : Feuille de style spécifique aux pages de connexion et d'inscription.  
 - `airbnb_logo.png` : Logo du projet.  
-- `illustration.jpg` : Image illustrative du projet.  
+- `illustration.jpg` : Image illustrative du projet.
+- `Construction de la base de donnée.txt` : Instruction sql pour la construction de la bdd.
+- `requêtes.txt` : Requêtes de manipulation de données.  
 
 ## 🚀 Fonctionnalités  
 - Gestion des utilisateurs (inscription, connexion).  
