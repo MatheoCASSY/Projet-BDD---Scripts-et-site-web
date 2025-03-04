@@ -154,7 +154,7 @@
         </div>
 
         <div class="form-group">
-            <label for="summary">Résumé du Description :</label>
+            <label for="summary">Description :</label>
             <textarea name="summary" id="summary">Résumé par défaut</textarea>
         </div>
 
