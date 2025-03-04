@@ -106,7 +106,38 @@
 
 </head>
 <body>
+<?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            try {
+                $pdo = new PDO("mysql:host=localhost;dbname=airbnb", "root", "", [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
+                $query = "INSERT INTO rooms (address, city, state, country, latitude, longitude, home_type, total_occupancy, summary, price, total_bedrooms, total_bathrooms, is_available) 
+                          VALUES (:address, :city, :state, :country, :latitude, :longitude, :home_type, :total_occupancy, :summary, :price, :total_bedrooms, :total_bathrooms, :is_available)";
+                
+                $stmt = $pdo->prepare($query);
+                $stmt->execute([
+                    ':address' => $_POST['address'],
+                    ':city' => $_POST['city'],
+                    ':state' => $_POST['state'],
+                    ':country' => $_POST['country'],
+                    ':latitude' => $_POST['latitude'],
+                    ':longitude' => $_POST['longitude'],
+                    ':home_type' => $_POST['home_type'] === 'Autre' ? $_POST['other_home_type'] : $_POST['home_type'],
+                    ':total_occupancy' => $_POST['total_occupancy'],
+                    ':summary' => $_POST['summary'],
+                    ':price' => $_POST['price'],
+                    ':total_bedrooms' => $_POST['total_bedrooms'],
+                    ':total_bathrooms' => $_POST['total_bathrooms'],
+                    ':is_available' => isset($_POST['is_available']) ? 1 : 0
+                ]);
+
+                echo "<p>Logement ajouté avec succès !</p>";
+            } catch (PDOException $e) {
+                echo "<p>Erreur : " . $e->getMessage() . "</p>";
+            }
+        }
+        ?>
+        
 <div class="container">
     <h1>Ajouter un Nouveau Logement</h1>
 
