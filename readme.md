@@ -1,4 +1,4 @@
-# README - Optimisation de la Base de Données d'Airbnb  
+# README - Reproduction de la Base de Données d'Airbnb  
 
 ## 📌 Description  
 Ce projet vise à reproduire la base de données d'Airbnb exploitée par une esquisse de site web.
