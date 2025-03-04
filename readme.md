@@ -21,7 +21,7 @@ Ce projet vise à reproduire la base de données d'Airbnb exploitée par une esq
 - Requêtes SQL pour optimiser la recherche et la manipulation des données.  
 
 ## 🛠 Technologies utilisées  
-- **Backend** : PHP, MySQL  
+- **Backend** : PHP, MySQL, JS  
 - **Frontend** : HTML, CSS  
 - **Base de données** : MySQL  
 
