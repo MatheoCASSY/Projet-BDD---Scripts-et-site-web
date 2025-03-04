@@ -30,7 +30,7 @@ try {
         <nav class="nav-links">
             <a href="register.php">Créer un compte</a>
             <a href="login.php">Se connecter</a>
-            <a href="addroom.php" class="add-room-btn">Ajouter mon logement</a> <!-- Nouveau bouton ajouté ici -->
+            <a href="addroom.php" class="add-room-btn">Ajouter mon logement</a>
         </nav>
     </div>
 </header>
